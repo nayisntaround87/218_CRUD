@@ -39,3 +39,12 @@ app.get('/api/mahasiswa', (req, res) => {
         res.json(results);
     });
 });
+
+app.post('/api/mahasiswa', (req, res) => {
+    const { nama, nim, kelas, prodi } = req.body;
+
+    if (!nama || !nim || !kelas || !prodi) {
+        return res.status(400).json({ message: 'nama, nim, kelas, prodi wajib diisi'});
+    )
+
+    db.query('INSERT INTO mahasiswa (nama, nim, kelas, prodi) VALUES (?, ?, ?, ?)',
