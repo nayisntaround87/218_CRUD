@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
 
 const db = mysql.createConnection({
@@ -22,3 +22,20 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:' + err.stack);
+        return;
+    }
+    console.log('Connection Successfully');
+});
+
+app.get('/api/mahasiswa', (req, res) => {
+    const sql = 'SELECT * FROM mahasiswa', (err, results) => {
+        if (err) {
+            console.error('Error executing query: ' + err.stack);
+            res.status(500).send('Error fetching users');
+            return;
+        }
+        res.json(results);
+    };
+});
