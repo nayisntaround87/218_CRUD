@@ -59,3 +59,19 @@ app.post('/api/mahasiswa', (req, res) => {
     }
     );
 });
+
+app.put('/api/mahasiswa/:id', (req, res) => {
+    const userId = req.params.id;
+    const { nama, nim, kelas, prodi } = req.body;
+    db.query(
+        'UPDATE mahasiswa SET nama = ?, nim = ?, kelas = ?, prodi = ? WHERE id = ?',
+        [nama, nim, kelas, prodi, userId],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ message: 'Database error' });
+            }
+            res.json({ message: 'User updated successfully' });
+        }   
+    );
+});
